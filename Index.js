@@ -8,7 +8,9 @@ const {
     AudioPlayerStatus,
     VoiceConnectionStatus,
 } = require('@discordjs/voice');
-const { token } = require('./config.json');
+require('dotenv').config()
+
+const token = process.env.SECRET_TOKEN
 
 /**
  * 	In this example, we are creating a single audio player that plays to a number of voice channels.
