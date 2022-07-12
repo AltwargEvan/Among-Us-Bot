@@ -6,7 +6,7 @@ const { Client, Collection, Intents } = require('discord.js');
 const { token } = require('./config.json');
 
 // Create a new client instance
-const client = new Client({ intents: [Intents.FLAGS.GUILDS] });
+const client = new Client({ intents: [Intents.FLAGS.GUILDS, Intents.FLAGS.GUILD_MESSAGES] });
 
 // Link commands to client
 client.commands = new Collection();
@@ -27,13 +27,13 @@ const eventsPath = path.join(__dirname, 'events');
 const eventFiles = fs.readdirSync(eventsPath).filter(file => file.endsWith('.js'));
 
 for (const file of eventFiles) {
-	const filePath = path.join(eventsPath, file);
-	const event = require(filePath);
-	if (event.once) {
-		client.once(event.name, (...args) => event.execute(...args));
-	} else {
-		client.on(event.name, (...args) => event.execute(...args));
-	}
+    const filePath = path.join(eventsPath, file);
+    const event = require(filePath);
+    if (event.once) {
+        client.once(event.name, (...args) => event.execute(...args));
+    } else {
+        client.on(event.name, (...args) => event.execute(...args));
+    }
 }
 
 // Handle Commands
